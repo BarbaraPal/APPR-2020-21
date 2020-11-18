@@ -1,6 +1,6 @@
 ---
 title: "Poročilo pri predmetu Analiza podatkov s programom R"
-author: "Študent FMF"
+author: "Barbara Pal"
 output:
   html_document: default
   pdf_document:
@@ -24,9 +24,8 @@ source("lib/rstudio.r", encoding="UTF-8")
 
 # Izbira teme
 
-Za vzorec bomo prikazali nekaj podatkov o slovenskih občinah.
+Delo in brezposelnost žensk v EU.
 
-![](slike/grb.png)
 
 ***
 
