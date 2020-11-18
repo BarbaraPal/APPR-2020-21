@@ -5,10 +5,42 @@ Repozitorij z gradivi pri predmetu APPR v študijskem letu 2020/21
 * [![Shiny](http://mybinder.org/badge.svg)](http://mybinder.org/v2/gh/BarbaraPal/APPR-2020-21/master?urlpath=shiny/APPR-2020-21/projekt.Rmd) Shiny
 * [![RStudio](http://mybinder.org/badge.svg)](http://mybinder.org/v2/gh/BarbaraPal/APPR-2020-21/master?urlpath=rstudio) RStudio
 
-## Tematika
+## Analiza dela in brezposelnosti žensk v EU
 
-Izbrali si boste temo, s katero se bo vaš projekt ukvarjal.
-Tukaj boste napisali, kje ste dobili podatke, ter kakšen je vaš cilj.
+V državah Evropske unije bi pričakovali, da razlik med spoloma v današnjem času (skorajda) ni. Zato bom analizirala stopnjo zaposlenosti pri obeh spolih glede na doseženo izobrazbo in starostno skupino. Prav tako me bodo zanimale razlike med spoloma pri delu za polovični in nedeločeni čas ter nezaposlenost in dolgoročna nezaposlenost. Primerjala bom podatke od leta 2005 do 2019, v 28 različnih državah. Iz tega bom potem naredila zaključke in napovedi za prihodnost. 
+
+Podatki so uvoženi s strani [Eurostat](https://ec.europa.eu/eurostat/data/database) v obliki CSV in XML.
+
+# Tabele
+
+1.tabela: Zaposlenost in aktivna populacija
+* spol
+* starostna skupina
+* država
+* leto
+
+2.tabela: Stopnja zaposlenosti glede na izobrazbo (v %)
+* spol
+* starostna skupina
+* država
+* leto
+* izobrazba
+
+3.tabela: Delo za polovični delovni čas in delo za nedoločen čas (z dodanim razlogom) kot delež vseh zaposlenih
+* spol
+* država
+* leto
+* delež zaposlenih s polovičnim delovnim časom
+* delež zaposlenih za nedoločeni čas in glavni razlog za zaposlitev za nedeločen čas
+
+4.tabela: Nezaposlenost in dolgoročna nezaposlenost
+* spol
+* država
+* leto
+* delež nezaposlenosti celotne populacije
+* delež nezaposlenosti aktivne populacije
+* delež dolgoročne nezaposlenosti med nezaposlenimi
+* delež dolgoročne nezaposlenosti med aktivno populacijo
 
 ## Program
 
