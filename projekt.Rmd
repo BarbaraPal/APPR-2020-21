@@ -89,7 +89,9 @@ Uvozila sem podatke iz Eurostata v obliki CSV in HTML. Podatke imam v več razpr
   - `SPOL` - spremenljivka: moški/ženski
   - `VREDNOST` - meritev: delež zelo dolgotrajno brezposelnih (brezposelni več kot 1 leto)
   
-**Opomba**: 
+```{r vizualizacija, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
+source("vizualizacija/vizualizacija.r", encoding="UTF-8")
+```
 Spodnji graf prikazuje delež zaposlenega aktivnega prebivalstva v Sloveniji (med 25 in 54 let).
 
 ```{r graf, echo=FALSE, message=FALSE, fig.align='left'}
