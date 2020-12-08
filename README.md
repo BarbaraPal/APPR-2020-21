@@ -7,40 +7,50 @@ Repozitorij z gradivi pri predmetu APPR v študijskem letu 2020/21
 
 ## Analiza dela in brezposelnosti žensk v EU
 
-V državah Evropske unije bi pričakovali, da razlik med spoloma v današnjem času (skorajda) ni. Zato bom analizirala stopnjo zaposlenosti pri obeh spolih glede na doseženo izobrazbo in starostno skupino. Prav tako me bodo zanimale razlike med spoloma pri delu za polovični in nedeločeni čas ter nezaposlenost in dolgoročna nezaposlenost. Primerjala bom podatke od leta 2005 do 2019, v 28 različnih državah. Iz tega bom potem naredila zaključke in napovedi za prihodnost. 
+V državah Evropske unije bi pričakovali, da razlik med spoloma v današnjem času (skorajda) ni. Zato bom analizirala stopnjo zaposlenosti pri obeh spolih glede na doseženo izobrazbo in starostno skupino. Prav tako me bodo zanimale razlike med spoloma pri delu za polovični in nedeločeni čas ter nezaposlenost in dolgoročna nezaposlenost. Primerjala bom podatke od leta 2011 do 2019, v 28 različnih državah. Iz tega bom potem naredila zaključke in napovedi za prihodnost. 
 
-Podatki so uvoženi s strani [Eurostat](https://ec.europa.eu/eurostat/data/database) v obliki CSV in XML.
+Podatki so uvoženi s strani [Eurostat](https://ec.europa.eu/eurostat/data/database) v obliki CSV in HTML.
 
 # Tabele
 
-1.tabela: Zaposlenost in aktivna populacija
+1.tabela: Zaposlenost
+* leto
+* država
 * spol
 * starostna skupina
-* država
-* leto
+* indikator (aktivna populacija, celotna populacija)
+* delež zaposlenosti (%)
 
-2.tabela: Stopnja zaposlenosti glede na izobrazbo (v %)
+2.tabela: Zaposlenost glede na izobrazbo
+* leto
+* država
 * spol
 * starostna skupina
-* država
-* leto
 * izobrazba
+* delež zaposlenosti (%)
 
-3.tabela: Delo za polovični delovni čas in delo za nedoločen čas (z dodanim razlogom) kot delež vseh zaposlenih
-* spol
-* država
+3.tabela: Delo za polovični delovni čas
 * leto
-* delež zaposlenih s polovičnim delovnim časom
-* delež zaposlenih za nedoločeni čas in glavni razlog za zaposlitev za nedeločen čas
+* država
+* spol
+* delež zaposlenih (%)
 
-4.tabela: Nezaposlenost in dolgoročna nezaposlenost
-* spol
-* država
+4.tabela: Delo za nedoločen čas (z dodanim razlogom)
 * leto
-* delež nezaposlenosti celotne populacije
-* delež nezaposlenosti aktivne populacije
-* delež dolgoročne nezaposlenosti med nezaposlenimi
-* delež dolgoročne nezaposlenosti med aktivno populacijo
+* država
+* spol
+* glavni razlog za zaposlitev za nedeločen čas
+* indikator (delež vseh zaposlenih, delež zaposlenih za nedoločen čas)
+* delež zaposlenih za nedoločeni čas (%)
+
+5.tabela: Nezaposlenost in dolgoročna nezaposlenost
+* leto
+* država
+* spol
+* delež nezaposlenosti celotne populacije (%)
+* delež nezaposlenosti aktivne populacije (%)
+* delež dolgoročne nezaposlenosti med nezaposlenimi (%)
+* delež dolgoročne nezaposlenosti med aktivno populacijo (%)
 
 ## Program
 
