@@ -24,9 +24,7 @@ source("lib/rstudio.r", encoding="UTF-8")
 
 # Izbira teme
 
-Delo in brezposelnost žensk v EU.
-
-
+Analizirala bom delo in brezposelnost žensk v državah EU od leta 2011 do 2019. Natančneje bom primerjala položaj žensk glede na moške pri delu za nedoločen in polovični delovni čas. Prav tako me bo zanimala zaposlitev glede na doseženo izobrazbo pri obeh spolih. Nazadnje bom analizirala še brezposelnost in trajno brezposelnost.
 ***
 
 # Obdelava, uvoz in čiščenje podatkov
@@ -35,72 +33,73 @@ Delo in brezposelnost žensk v EU.
 source("uvoz/uvoz.r", encoding="UTF-8")
 ```
 
-Uvozili smo podatke o občinah v obliki CSV s statističnega urada ter v obliki HTML
-z Wikipedije. Podatke imamo v dveh razpredelnicah v obliki *tidy data*.
+Uvozila sem podatke iz Eurostata v obliki CSV in HTML. Podatke imam v več razpredelnicah v obliki *tidy data*.
 
-1. `druzine` - podatki o družinah za vsako občino
-  - `obcina` - spremenljivka: ime občine (neurejen faktor),
-  - `velikost.druzine` - spremenljivka: število otrok v družini (število: 1, 2, 3 ali 4, kjer zadnja vrednost pomeni 4 ali več),
-  - `stevilo.druzin` - meritev: število družin z ustreznim številom otrok v ustrezni občini (število).
+1. `DELO` - podatki o deležu zaposlenih
+  - `LETO` - spremenljivka: od 2011 do 2019
+  - `DRŽAVA` - spremenljivka: ime države,
+  - `SPOL` - spremenljivka: moški/ženski,
+  - `STAROST` - spremenljivka: 3 starostne skupine (15-24 let, 25-54 let, 55-64 let)
+  - `INDIKATOR` - spremenljivla: delež vsega prebivalstva/delež aktivnega prebivalstva
+  - `VREDNOST`- meritev: delež zaposlenih
+  
+2. `IZOBRAZBA` - podatki o deležu zaposlenih
+  - `LETO` - spremenljivka: od 2011 do 2019
+  - `DRŽAVA` - spremenljivka: ime države
+  - `SPOL` - spremenljivka: moški/ženski
+  - `STAROST` - spremenljivka: 3 starostne skupine (15-24 let, 25-54 let, 55-64 let)
+  - `INDIKATOR` - spremenljivka: raven izobrazbe (Primarna(0-2), Sekundarna(3-4), Terciarna(5-8), brez odgovora)
+  - `VREDNOST`- meritev: delež zaposlenih
+  
+3. `POLOVIČNI DELOVNI ČAS` - podatki o deležu zaposlenih za polovični delovni čas
+  - `LETO` - spremenljivka: od 2011 do 2019
+  - `DRŽAVA` - spremenljivka: ime države
+  - `SPOL` - spremenljivka: moški/ženski
+  - `VREDNOST` - meritev: delež zaposlenih za polovični delovni čas
+  
+4. `NEDOLOČENI DELOVNI ČAS` - podatki o deležu zaposlenih za polovični delovni čas
+  - `LETO` - spremenljivka: od 2011 do 2019
+  - `DRŽAVA` - spremenljivka: ime države
+  - `SPOL` - spremenljivka: moški/ženski
+  - `RAZLOG` - spremenljivka: Ni mogel najti službe za nedoločen čas, Ni hotel službe za nedoločen čas, Izobraževanje ali usposabljanje, Poskusna doba, Ni odgovora)
+  - `INDIKATOR` - spremenljivka: delež vseh zaposlenih/delež zaposlenih za nedoločen čas
+  - `VREDNOST` - meritev: delež zaposlenih za nedoločen čas
+  
+5. `BREZPOSELNOST` - podatki o deležu brezposelnih med celotno populacijo staro od 15 do 64 let
+  - `LETO` - spremenljivka: od 2011 do 2019
+  - `DRŽAVA` - spremenljivka: ime države
+  - `SPOL` - spremenljivka: moški/ženski
+  - `VREDNOST` - meritev: delež brezposelnih
+  
+6. `BREZPOSELNOST AKTIVNEGA PREBIVALSTVA` - podatki o deležu brezposelnih (15-64let)
+  - `LETO` - spremenljivka: od 2011 do 2019
+  - `DRŽAVA` - spremenljivka: ime države
+  - `SPOL` - spremenljivka: moški/ženski
+  - `VREDNOST` - meritev: delež brezposelnih glede na aktivno populacijo  
 
-2. `obcine` - podatki o občinah
-  - `obcina` - spremenljivka: ime občine (neurejen faktor),
-  - `povrsina` - meritev: površina občine v km$^2$ (število),
-  - `prebivalci` - meritev: prebivalstvo občine (število),
-  - `gostota` - meritev: število prebivalcev na km$^2$ (število),
-  - `naselja` - meritev: število naselij v občini (število),
-  - `ustanovitev` - meritev: leto ustanovitve občine (število),
-  - `pokrajina` - meritev: pokrajina, ki ji občina pripada (neurejen faktor),
-  - `regija` - meritev: regija, ki ji občina pripada (neurejen faktor),
-  - `odcepitev` - meritev: podatki o občinah, od katerih se je občina odcepila (besedilo).
+7. `DOLGOTRAJNA BREZPOSELNOST` - podatki o deležu brezposelnih (15-64let)
+  - `LETO` - spremenljivka: od 2011 do 2019
+  - `DRŽAVA` - spremenljivka: ime države
+  - `SPOL` - spremenljivka: moški/ženski
+  - `VREDNOST` - meritev: delež dolgotrajno brezposelnih (brezposelni 6-12 mesecev)
 
-**Opomba**: da bi razpredelnica `obcine` res bila v obliki *tidy data*, bi morali odstraniti stolpec `gostota` (saj je izpeljan iz stolpcev `povrsina` in `prebivalci`), podatke o pokrajinah pa bi morali premakniti v drugo razpredelnico, saj nekatere občine pripadajo dvema pokrajinama. Podobno bi morali narediti tudi s stolpcem `odcepitev`.
+8. `ZELO DOLGOTRAJNA BREZPOSELNOST` - podatki o deležu brezposelnih (15-64let)
+  - `LETO` - spremenljivka: od 2011 do 2019
+  - `DRŽAVA` - spremenljivka: ime države
+  - `SPOL` - spremenljivka: moški/ženski
+  - `VREDNOST` - meritev: delež zelo dolgotrajno brezposelnih (brezposelni več kot 1 leto)
+  
+**Opomba**: 
+Spodnji graf prikazuje delež zaposlenega aktivnega prebivalstva v Sloveniji (med 25 in 54 let).
 
-Spodnji graf prikazuje porazdelitev števila naselij v občinah.
-
-```{r histogram, fig.align='center', fig.cap='Histogram števila naselij v občinah'}
-ggplot(obcine, aes(x=naselja)) + geom_histogram() +
-  ggtitle("Pogostost števila naselij") + xlab("Število naselij") + ylab("Število občin")
-```
+```{r graf, echo=FALSE, message=FALSE, fig.align='left'}
+graf_slovenija
+``` 
 
 ***
 
 # Analiza in vizualizacija podatkov
 
-```{r vizualizacija, results='hide'}
-source("vizualizacija/vizualizacija.r", encoding="UTF-8")
-```
-
-Spodnji zemljevid prikazuje povprečno velikost družine za vsako občino.
-
-```{r zemljevid, fig.align='center', fig.cap='Zemljevid povprečnega števila otrok v družini'}
-tm_shape(merge(zemljevid, povprecja, by.x="OB_UIME", by.y="obcina")) +
-  tm_polygons("povprecje", title="Povprečje") +
-  tm_layout(title="Povprečno število otrok v družini")
-```
-
-***
 
 # Napredna analiza podatkov
 
-```{r analiza}
-source("analiza/analiza.r", encoding="UTF-8")
-```
-
-Spodnji graf prikazuje povezavo med številom naselij in površino občine.
-
-```{r graf, fig.align='center', fig.cap='Povezava med številom naselij in površino občine'}
-ggplot(inner_join(obcine, data.frame(obcina=names(skupine),
-                                     skupina=factor(skupine)), by="obcina")
-, aes(x=povrsina, y=naselja, color=skupina, size=prebivalci/1000)) + geom_point() +
-  ggtitle("Število naselij glede na površino občine") +
-  xlab(expression("Površina (km"^2 * ")")) + ylab("Št. naselij") +
-  guides(color=guide_legend(title="Skupina"),
-         size=guide_legend(title="Prebivalci (* 1000)"))
-```
-
-***
-
-```{r shiny}
-shinyAppDir("shiny", options=list(width="100%", height=600))
-```

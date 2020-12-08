@@ -148,7 +148,7 @@ uvoz.brezposelnost.delez.vseh <- function(){
     .[[1]] %>% html_table(dec=",") %>% 
     transmute(drzava=X1, LETO=parse_integer(X2), moški=parse_number(X3), ženske=parse_number(X4)) %>% 
     drop_na() %>% pivot_longer(c(ženske, moški), names_to="SPOL", values_to="DELEŽ")
-  tab1 <- data.frame(DRDŽAVA=drzaveslo, ime=drzave, stringsAsFactors = FALSE)
+  tab1 <- data.frame(DRŽAVA=drzaveslo, ime=drzave, stringsAsFactors = FALSE)
   t1 <- tabela.delez.vseh %>%
     inner_join(tab1, c("drzava"="ime")) %>% select(-drzava)
   tabela5 <- t1[c(1,4,2,3)]
