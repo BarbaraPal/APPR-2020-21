@@ -1,17 +1,17 @@
 library(shiny)
 
-shinyUI(fluidPage(
+#shinyUI(fluidPage(
   
-  titlePanel("Slovenske občine"),
+#  titlePanel("Slovenske občine"),
   
-  tabsetPanel(
-      tabPanel("Velikost družine",
-               DT::dataTableOutput("druzine")),
+#  tabsetPanel(
+#      tabPanel("Velikost družine",
+#               DT::dataTableOutput("druzine")),
       
-      tabPanel("Število naselij",
-               sidebarPanel(
-                  uiOutput("pokrajine")
-                ),
-               mainPanel(plotOutput("naselja")))
-    )
-))
+#      tabPanel("Število naselij",
+#               sidebarPanel(
+#                  uiOutput("pokrajine")
+#                ),
+#               mainPanel(plotOutput("naselja")))
+#    )
+#))
