@@ -1,6 +1,5 @@
 # 3. faza: Vizualizacija podatkov
-delo <- read_csv("podatki/delo.csv", locale=locale(encoding = "UTF-8"))
-delo <- filter(delo, delo$DRŽAVA == "Slovenija")
+delo <- filter(shrani.delo, shrani.delo$DRZAVA == "Slovenija")
 delo <- filter(delo, delo$STAROST == "25-54")
 delo <- filter(delo, delo$INDIKATOR == "Delež aktivne populacije")
 delo <- delo %>% select(LETO, SPOL, VREDNOST)

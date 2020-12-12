@@ -47,7 +47,7 @@ uvoz.delo <- function(){
     ) %>% 
     transmute(LETO=parse_integer(TIME), country=parse_character(GEO), age=parse_character(AGE),
               sex=parse_character(SEX), indicator=parse_character(INDIC_EM), VREDNOST=parse_number(Value))
-  tab1 <- data.frame(DRŽAVA=drzaveslo, ime=drzave, stringsAsFactors = FALSE)
+  tab1 <- data.frame(DRZAVA=drzaveslo, ime=drzave, stringsAsFactors = FALSE)
   tab2 <- data.frame(STAROST=starostslo, age1=starost1, stringsAsFactors = FALSE)
   tab3 <- data.frame(SPOL=spolslo, sex1=spol1, stringsAsFactors = FALSE)
   tab4 <- data.frame(INDIKATOR=indikator.dela.slo, indicator1=indikator.dela, stringsAsFactors = FALSE)
@@ -75,7 +75,7 @@ uvoz.izobrazba <- function(){
     transmute(LETO=parse_integer(TIME), country=parse_character(GEO), age=parse_character(AGE),
               sex=parse_character(SEX), indicator=parse_character(ISCED11), VREDNOST=parse_number(Value)) %>% 
     drop_na()
-  tab1 <- data.frame(DRŽAVA=drzaveslo, ime=drzave, stringsAsFactors = FALSE)
+  tab1 <- data.frame(DRZAVA=drzaveslo, ime=drzave, stringsAsFactors = FALSE)
   tab2 <- data.frame(STAROST=starostslo, age1=starost1, stringsAsFactors = FALSE)
   tab3 <- data.frame(SPOL=spolslo, sex1=spol1, stringsAsFactors = FALSE)
   tab4 <- data.frame(INDIKATOR=indikator.zaposlitve.slo, indicator1=indikator.zaposlitve, stringsAsFactors = FALSE)
@@ -103,7 +103,7 @@ uvoz.polovica <- function(){
     transmute(LETO=parse_integer(TIME), country=parse_character(GEO), age=parse_character(AGE),
               sex=parse_character(SEX), VREDNOST=parse_number(Value)) %>% 
     drop_na()
-  tab1 <- data.frame(DRŽAVA=drzaveslo, ime=drzave, stringsAsFactors = FALSE)
+  tab1 <- data.frame(DRZAVA=drzaveslo, ime=drzave, stringsAsFactors = FALSE)
   tab2 <- data.frame(SPOL=spolslo, sex1=spol1, stringsAsFactors = FALSE)
   t1 <- polovica %>% inner_join(tab1, c("country"="ime")) %>% select(-country, -age)
   t2 <- t1 %>% inner_join(tab2, c("sex"="sex1")) %>% select(-sex)
@@ -127,7 +127,7 @@ uvoz.nedolocen <- function(){
     transmute(LETO=parse_integer(TIME), country=parse_character(GEO), sex=parse_character(SEX),
               reason=parse_character(REASON), VREDNOST=parse_number(Value), unit = parse_character(UNIT)) %>% 
     drop_na()
-  tab1 <- data.frame(DRŽAVA=drzaveslo, ime=drzave, stringsAsFactors = FALSE)
+  tab1 <- data.frame(DRZAVA=drzaveslo, ime=drzave, stringsAsFactors = FALSE)
   tab2 <- data.frame(SPOL=spolslo, sex1=spol1, stringsAsFactors = FALSE)
   tab3 <- data.frame(RAZLOG=razlog.nedolocen.slo, razlog1=razlog.nedolocen, stringsAsFactors = FALSE)
   tab4 <- data.frame(INDIKATOR=enota.nedolocen.slo, unit1=enota.nedolocen, stringsAsFactors = FALSE)
@@ -147,8 +147,8 @@ uvoz.brezposelnost.delez.vseh <- function(){
   tabela.delez.vseh <- stran %>% html_nodes(xpath="//table") %>%
     .[[1]] %>% html_table(dec=",") %>% 
     transmute(drzava=X1, LETO=parse_integer(X2), moški=parse_number(X3), ženske=parse_number(X4)) %>% 
-    drop_na() %>% pivot_longer(c(ženske, moški), names_to="SPOL", values_to="DELEŽ")
-  tab1 <- data.frame(DRŽAVA=drzaveslo, ime=drzave, stringsAsFactors = FALSE)
+    drop_na() %>% pivot_longer(c(ženske, moški), names_to="SPOL", values_to="DELEZ")
+  tab1 <- data.frame(DRZAVA=drzaveslo, ime=drzave, stringsAsFactors = FALSE)
   t1 <- tabela.delez.vseh %>%
     inner_join(tab1, c("drzava"="ime")) %>% select(-drzava)
   tabela5 <- t1[c(1,4,2,3)]
@@ -162,8 +162,8 @@ uvoz.brezposelnost.delez.aktivnih <- function(){
   tabela.delez.aktivnih <- stran %>% html_nodes(xpath="//table") %>%
     .[[2]] %>% html_table(dec=",") %>% 
     transmute(drzava=X1, LETO=parse_integer(X2), moški=parse_number(X3), ženske=parse_number(X4)) %>% 
-    drop_na() %>% pivot_longer(c(ženske, moški), names_to="SPOL", values_to="DELEŽ")
-  tab1 <- data.frame(DRŽAVA=drzaveslo, ime=drzave, stringsAsFactors = FALSE)
+    drop_na() %>% pivot_longer(c(ženske, moški), names_to="SPOL", values_to="DELEZ")
+  tab1 <- data.frame(DRZAVA=drzaveslo, ime=drzave, stringsAsFactors = FALSE)
   t1 <- tabela.delez.aktivnih %>%
     inner_join(tab1, c("drzava"="ime")) %>% select(-drzava)
   tabela6 <- t1[c(1,4,2,3)]
@@ -178,8 +178,8 @@ uvoz.dolgotrajna.brezposelnost <- function(){
   tabela.dolgorocna <- url %>% html_nodes(xpath="//table") %>%
     .[[1]] %>% html_table(dec=",") %>% 
     transmute(LETO=parse_integer(X1), drzava=X2, moški=parse_number(X3), ženske=parse_number(X4)) %>% 
-    drop_na() %>% pivot_longer(c(ženske, moški), names_to="SPOL", values_to="DELEŽ")
-  tab1 <- data.frame(DRŽAVA=drzaveslo, ime=drzave, stringsAsFactors = FALSE)
+    drop_na() %>% pivot_longer(c(ženske, moški), names_to="SPOL", values_to="DELEZ")
+  tab1 <- data.frame(DRZAVA=drzaveslo, ime=drzave, stringsAsFactors = FALSE)
   t1 <- tabela.dolgorocna %>%
     inner_join(tab1, c("drzava"="ime")) %>% select(-drzava)
   tabela7 <- t1[c(1,4,2,3)]
@@ -193,8 +193,8 @@ uvoz.zelo.dolgotrajna.brezposelnost <- function(){
   tabela.zelo.dolgotrajna <- url %>% html_nodes(xpath="//table") %>%
     .[[2]] %>% html_table(dec=",") %>% 
     transmute(LETO=parse_integer(X1), drzava=X2, moški=parse_number(X3), ženske=parse_number(X4)) %>% 
-    drop_na() %>% pivot_longer(c(ženske, moški), names_to="SPOL", values_to="DELEŽ")
-  tab1 <- data.frame(DRŽAVA=drzaveslo, ime=drzave, stringsAsFactors = FALSE)
+    drop_na() %>% pivot_longer(c(ženske, moški), names_to="SPOL", values_to="DELEZ")
+  tab1 <- data.frame(DRZAVA=drzaveslo, ime=drzave, stringsAsFactors = FALSE)
   t1 <- tabela.zelo.dolgotrajna %>%
     inner_join(tab1, c("drzava"="ime")) %>% select(-drzava)
   tabela8 <- t1[c(1,4,2,3)]
