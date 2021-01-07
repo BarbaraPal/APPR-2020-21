@@ -6,6 +6,8 @@ library(readr)
 library(ggplot2)
 library(digest)
 library(mosaic)
+library(tmap)
+library(RColorBrewer)
 
 # Funkcija uvozi.zemljevid(url, ime.zemljevida, pot.zemljevida="",
 #                          mapa="../zemljevidi", encoding=NULL, force=FALSE)
