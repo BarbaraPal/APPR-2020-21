@@ -3,59 +3,32 @@
 # funkcija, ki izbere iz tabele samo določene države
 
 sosednje.drzave <- function(tabela){
-  drzave <- filter(tabela, tabela$DRZAVA == "Slovenija") %>%
-    full_join(filter(tabela, tabela$DRZAVA == "Hrvaška")) %>%
-    full_join(filter(tabela, tabela$DRZAVA == "Avstrija")) %>%
-    full_join(filter(tabela, tabela$DRZAVA == "Italija")) %>%
-    full_join(filter(tabela, tabela$DRZAVA == "Madžarska"))
+  drzave <- tabela %>% filter(DRZAVA %in% c("Slovenija", "Hrvaška", "Avstrija", "Italija", "Madžarska"))
   return(drzave)
 }
 
 prva.skupina <- function(tabela){
-  drzave <- filter(tabela, tabela$DRZAVA == "Slovenija") %>%
-    full_join(filter(tabela, tabela$DRZAVA == "Nemčija")) %>%
-    full_join(filter(tabela, tabela$DRZAVA == "Belgija")) %>%
-    full_join(filter(tabela, tabela$DRZAVA == "Luksemburg")) %>%
-    full_join(filter(tabela, tabela$DRZAVA == "Francija"))
+  drzave <- tabela %>% filter(DRZAVA %in% c("Slovenija", "Nemčija", "Belgija", "Luksemburg", "Francija"))
   return(drzave)
 }
 
 druga.skupina <- function(tabela){
-  drzave <- filter(tabela, tabela$DRZAVA == "Slovenija") %>%
-    full_join(filter(tabela, tabela$DRZAVA == "Nizozemska")) %>%
-    full_join(filter(tabela, tabela$DRZAVA == "Danska")) %>%
-    full_join(filter(tabela, tabela$DRZAVA == "Irska")) %>%
-    full_join(filter(tabela, tabela$DRZAVA == "Velika Britanija"))
+  drzave <- tabela %>% filter(DRZAVA %in% c("Slovenija", "Nizozemska", "Danska", "Irska", "Velika Britanija"))
   return(drzave)
 }
 
 tretja.skupina <- function(tabela){
-  drzave <- filter(tabela, tabela$DRZAVA == "Slovenija") %>%
-    full_join(filter(tabela, tabela$DRZAVA == "Švedska")) %>%
-    full_join(filter(tabela, tabela$DRZAVA == "Finska")) %>%
-    full_join(filter(tabela, tabela$DRZAVA == "Estonija")) %>%
-    full_join(filter(tabela, tabela$DRZAVA == "Latvija")) %>%
-    full_join(filter(tabela, tabela$DRZAVA == "Litva"))
+  drzave <- tabela %>% filter(DRZAVA %in% c("Slovenija", "Švedska", "Finska", "Estonija", "Latvija", "Litva"))
   return(drzave)
 }
 
 cetrta.skupina <- function(tabela){
-  drzave <- filter(tabela, tabela$DRZAVA == "Slovenija") %>%
-    full_join(filter(tabela, tabela$DRZAVA == "Grčija")) %>%
-    full_join(filter(tabela, tabela$DRZAVA == "Portugalska")) %>%
-    full_join(filter(tabela, tabela$DRZAVA == "Španija")) %>%
-    full_join(filter(tabela, tabela$DRZAVA == "Malta")) %>%
-    full_join(filter(tabela, tabela$DRZAVA == "Ciper"))
+  drzave <- tabela %>% filter(DRZAVA %in% c("Slovenija", "Grčija", "Portugalska", "Španija", "Malta", "Ciper"))
   return(drzave)
 }
 
 peta.skupina <- function(tabela){
-  drzave <- filter(tabela, tabela$DRZAVA == "Slovenija") %>%
-    full_join(filter(tabela, tabela$DRZAVA == "Češka")) %>%
-    full_join(filter(tabela, tabela$DRZAVA == "Poljska")) %>%
-    full_join(filter(tabela, tabela$DRZAVA == "Slovaška")) %>%
-    full_join(filter(tabela, tabela$DRZAVA == "Bolgarija")) %>%
-    full_join(filter(tabela, tabela$DRZAVA == "Romunija"))
+  drzave <- tabela %>% filter(DRZAVA %in% c("Slovenija", "Češka", "Poljska", "Slovaška", "Bolgarija", "Romunija"))
   return(drzave)
 }
 ########
@@ -64,19 +37,17 @@ peta.skupina <- function(tabela){
 
 # Slovenija
 
-delo <- filter(shrani.delo, shrani.delo$DRZAVA == "Slovenija")
-delo <- filter(delo, delo$STAROST == "25-54")
-delo <- filter(delo, delo$INDIKATOR == "Delež aktivne populacije")
-delo <- delo %>% select(LETO, SPOL, VREDNOST)
-  
+delo <- shrani.delo %>% filter(DRZAVA %in% "Slovenija", STAROST %in% "25-54", 
+                               INDIKATOR %in% "Delež aktivne populacije") %>% 
+  select(LETO, SPOL, VREDNOST)
+
 graf_slovenija <- ggplot((data = delo), aes(x= as.numeric(LETO), y= VREDNOST, col=SPOL)) + geom_point() + geom_line() +
   scale_x_continuous('LETO', breaks = seq(2011, 2019, 1)) +
   ggtitle('Zaposlenost moških in žensk v Sloveniji')
 
-delo1 <- filter(shrani.delo, shrani.delo$DRZAVA == "Slovenija")
-delo1 <- filter(delo1, delo1$STAROST == "25-54")
-delo1 <- filter(delo1, delo1$INDIKATOR == "Delež celotne populacije")
-delo1 <- delo1 %>% select(LETO, SPOL, VREDNOST)
+delo1 <- shrani.delo %>% filter(DRZAVA %in% "Slovenija", STAROST %in% "25-54", 
+                               INDIKATOR %in% "Delež celotne populacije") %>% 
+  select(LETO, SPOL, VREDNOST)
 
 graf_slovenija1 <- ggplot((data = delo1), aes(x= as.numeric(LETO), y= VREDNOST, col=SPOL)) + geom_point() + geom_line() +
   scale_x_continuous('LETO', breaks = seq(2011, 2019, 1)) +
@@ -84,14 +55,7 @@ graf_slovenija1 <- ggplot((data = delo1), aes(x= as.numeric(LETO), y= VREDNOST, 
  
 
 # Države EU
-
-filter1 <- filter(shrani.delo, shrani.delo$INDIKATOR == "Delež aktivne populacije")
-sosednje.drzave.all <- sosednje.drzave(filter1)
-prva.skupina.all <- prva.skupina(filter1)
-druga.skupina.all <- druga.skupina(filter1)
-tretja.skupina.all <- tretja.skupina(filter1)
-cetrta.skupina.all <- cetrta.skupina(filter1)
-peta.skupina.all <- peta.skupina(filter1)
+filtriranje2 <- shrani.delo %>% filter(INDIKATOR == "Delež aktivne populacije")
 
 graf.primerjava.delo <- function(tabela){
   graf <- ggplot(data = tabela,
@@ -104,21 +68,20 @@ graf.primerjava.delo <- function(tabela){
   print(graf)
 }
 
-sosednje.drzave.graf <- graf.primerjava.delo(sosednje.drzave.all)
-prva.skupina.graf <- graf.primerjava.delo(prva.skupina.all)
-druga.skupina.graf <- graf.primerjava.delo(druga.skupina.all)
-tretja.skupina.graf <- graf.primerjava.delo(tretja.skupina.all)
-cetrta.skupina.graf <- graf.primerjava.delo(cetrta.skupina.all)
-peta.skupina.graf <- graf.primerjava.delo(peta.skupina.all)
+sosednje.drzave.graf <- graf.primerjava.delo(sosednje.drzave(filtriranje2))
+prva.skupina.graf <- graf.primerjava.delo(prva.skupina(filtriranje2))
+druga.skupina.graf <- graf.primerjava.delo(druga.skupina(filtriranje2))
+tretja.skupina.graf <- graf.primerjava.delo(tretja.skupina(filtriranje2))
+cetrta.skupina.graf <- graf.primerjava.delo(cetrta.skupina(filtriranje2))
+peta.skupina.graf <- graf.primerjava.delo(peta.skupina(filtriranje2))
 
 
 # Zaposlenost žensk v državah EU (primerjava med državami) 
 
 filtriranje1 <- function(tabela){
-  tabela <- filter(tabela, tabela$STAROST== "25-54")
-  tabela <- filter(tabela, tabela$SPOL== "ženske")
-  tabela <- filter(tabela, tabela$INDIKATOR == "Delež celotne populacije")
-  tabela <- tabela %>% select(LETO, DRZAVA, VREDNOST)
+  tabela <- tabela %>% filter(STAROST == "25-54", SPOL == "ženske") %>% 
+    select(LETO, DRZAVA, VREDNOST)
+  return(tabela)
 }
 
 graf.zenske <- function(tabela){
@@ -128,23 +91,12 @@ graf.zenske <- function(tabela){
   return(print(graf))
 }
 
-sosednje.drzave.zenske <- filtriranje1(sosednje.drzave(shrani.delo))
-sosednje.drzave.zenske.graf <- graf.zenske(sosednje.drzave.zenske)
-
-prva.skupina.zenske <- filtriranje1(prva.skupina(shrani.delo))
-prva.skupina.zenske.graf <- graf.zenske(prva.skupina.zenske)
-
-druga.skupina.zenske <- filtriranje1(druga.skupina(shrani.delo))
-druga.skupina.zenske.graf <- graf.zenske(druga.skupina.zenske)
-
-tretja.skupina.zenske <- filtriranje1(tretja.skupina(shrani.delo))
-tretja.skupina.zenske.graf <- graf.zenske(tretja.skupina.zenske)
-
-cetrta.skupina.zenske <- filtriranje1(cetrta.skupina(shrani.delo))
-cetrta.skupina.zenske.graf <- graf.zenske(cetrta.skupina.zenske)
-
-peta.skupina.zenske <- filtriranje1(peta.skupina(shrani.delo))
-peta.skupina.zenske.graf <- graf.zenske(peta.skupina.zenske)
+sosednje.drzave.zenske.graf <- graf.zenske(filtriranje1(sosednje.drzave(filtriranje2)))
+prva.skupina.zenske.graf <- graf.zenske(filtriranje1(prva.skupina(filtriranje2)))
+druga.skupina.zenske.graf <- graf.zenske(filtriranje1(druga.skupina(filtriranje2)))
+tretja.skupina.zenske.graf <- graf.zenske(filtriranje1(tretja.skupina(filtriranje2)))
+cetrta.skupina.zenske.graf <- graf.zenske(filtriranje1(cetrta.skupina(filtriranje2)))
+peta.skupina.zenske.graf <- graf.zenske(filtriranje1(peta.skupina(filtriranje2)))
 
 
 ##################################
@@ -153,15 +105,17 @@ peta.skupina.zenske.graf <- graf.zenske(peta.skupina.zenske)
 
 # Slovenija
 
-izobrazba <- filter(shrani.izobrazba, shrani.izobrazba$DRZAVA == "Slovenija")
-izobrazba <- filter(izobrazba, izobrazba$STAROST == "25-54")
-izobrazba <- izobrazba %>% select(LETO, SPOL, VREDNOST, INDIKATOR)
+izobrazba <- shrani.izobrazba %>% filter(DRZAVA == "Slovenija", STAROST == "25-54") %>% 
+  select(LETO, SPOL, VREDNOST, INDIKATOR)
+
 izobrazba.slovenija <- ggplot((data = izobrazba), aes(x= as.numeric(LETO), y= VREDNOST, col_double=SPOL, col=INDIKATOR)) + geom_point() + geom_line() +
   scale_x_continuous('LETO', breaks = seq(2011, 2019, 1)) +
   ggtitle('Zaposlenost moških in žensk v Sloveniji glede na izobrazbo')
 
+
 # EU
-filter2 <- filter(shrani.izobrazba, shrani.izobrazba$STAROST == "25-54")
+filter2 <- shrani.izobrazba %>% filter(STAROST == "25-54", 
+                                       INDIKATOR %in% c("Primarna(0-2)", "Sekundarna(3-4)", "Terciarna(5-8)"))
 
 graf.izobrazba.eu <- function(tabela){
   graf <- ggplot((data = tabela), aes(x= as.numeric(LETO), y= VREDNOST, col=SPOL)) + geom_point() + geom_line() +
@@ -183,7 +137,7 @@ peta.izobrazba.graf <- graf.izobrazba.eu(peta.skupina(filter2))
 #########################
 
 # Slovenija
-polovica <- filter(shrani.polovica, shrani.polovica$DRZAVA == "Slovenija") %>% 
+polovica <- shrani.polovica %>% filter(DRZAVA == "Slovenija") %>% 
   select(LETO, SPOL, VREDNOST)
 
 graf.polovica.slo <- ggplot((data = polovica), aes(x= as.numeric(LETO), y= VREDNOST, col=SPOL)) + geom_point() + geom_line() +
@@ -199,44 +153,24 @@ graf.polovica.eu <- function(tabela){
   print(graf)
 }
 
-#sosednje.polovica <- graf.polovica.eu(sosednje.drzave(shrani.polovica))
-#prva.polovica <- graf.polovica.eu(prva.skupina(shrani.polovica))
-#druga.polovca <- graf.polovica.eu(druga.skupina(shrani.polovica))
-#tretja.polovica <- graf.polovica.eu(tretja.skupina(shrani.polovica))
-#cetrta.polovica <- graf.polovica.eu(cetrta.skupina(shrani.polovica))
-#peta.polovica <- graf.polovica.eu(peta.skupina(shrani.polovica))
+sosednje.polovica <- graf.polovica.eu(sosednje.drzave(shrani.polovica))
+prva.polovica <- graf.polovica.eu(prva.skupina(shrani.polovica))
+druga.polovca <- graf.polovica.eu(druga.skupina(shrani.polovica))
+tretja.polovica <- graf.polovica.eu(tretja.skupina(shrani.polovica))
+cetrta.polovica <- graf.polovica.eu(cetrta.skupina(shrani.polovica))
+peta.polovica <- graf.polovica.eu(peta.skupina(shrani.polovica))
 ##########################
 # NEDOLOČENI DELOVNI ČAS #
 ##########################
 
 # Slovenija
-#nedolocen <- filter(shrani.nedolocen, shrani.nedolocen$DRZAVA == "Slovenija")
-#nedolocen <- filter(nedolocen, nedolocen$RAZLOG == "Ni mogel najti službe za nedoločen čas")
-#nedolocen <- filter(nedolocen, nedolocen$INDIKATOR == "Delež vseh zaposlenih")
-#nedolocen <- nedolocen %>% select(LETO, SPOL, VREDNOST)
+nedolocen <- shrani.nedolocen %>% filter(DRZAVA == "Slovenija", RAZLOG == "Ni mogel najti službe za nedoločen čas",
+                                         INDIKATOR == "Delež vseh zaposlenih") %>%
+  select(LETO, SPOL, VREDNOST)
 
-#graf.nedolocen.slo <- ggplot((data = nedolocen), aes(x= as.numeric(LETO), y= VREDNOST, col=SPOL)) + geom_point() + geom_line() +
-#  scale_x_continuous('LETO', breaks = seq(2011, 2019, 1)) +
-#  ggtitle('Nedoločeni delovni čas')
-
-# EU
-
-#graf.nedolocen.eu <- function(tabela){
-#  tabela <- filter(tabela, tabela$INDIKATOR == "Delež zaposlenih za nedoločen čas")
-#  graf <- ggplot((data = tabela), aes(x= as.numeric(LETO), y= VREDNOST, col=SPOL)) + geom_point() + geom_line() +
-#    scale_x_continuous('LETO', breaks = seq(2011, 2019, 2)) +
-#    facet_grid(RAZLOG~DRZAVA)
-#  ggtitle('Nedoločeni delovni čas')
-#  print(graf)
-#}
-
-#sosednje.nedolocen <- graf.nedolocen.eu(sosednje.drzave(shrani.nedolocen))
-#prva.nedolocen <- graf.nedolocen.eu(prva.skupina(shrani.nedolocen))
-#druga.nedolocen <- graf.nedolocen.eu(druga.skupina(shrani.nedolocen))
-#tretja.nedolocen <- graf.nedolocen.eu(tretja.skupina(shrani.nedolocen))
-#cetrta.nedolocen <- graf.nedolocen.eu(cetrta.skupina(shrani.nedolocen))
-#peta.nedolocen <- graf.nedolocen.eu(peta.skupina(shrani.nedolocen))
-
+graf.nedolocen.slo <- ggplot((data = nedolocen), aes(x= as.numeric(LETO), y= VREDNOST, col=SPOL)) + geom_point() + geom_line() +
+  scale_x_continuous('LETO', breaks = seq(2011, 2019, 1)) +
+  ggtitle('Nedoločeni delovni čas')
 
 #################
 # BREZPOSELNOST #
@@ -255,23 +189,43 @@ graf.brezposelnost.aktivni.slo <- ggplot((data = brezposelnost.aktivni.slo), aes
   scale_x_continuous('LETO', breaks = seq(2011, 2019, 1)) +
   ggtitle('Brezposelnost aktivnih')
 
+# EU
+graf.brezposelnost.eu <- function(tabela){
+  graf <- ggplot((data = tabela), aes(x= as.numeric(LETO), y= DELEZ, col=SPOL)) + geom_point() + geom_line() +
+    scale_x_continuous('LETO', breaks = seq(2011, 2019, 2)) +
+    facet_grid(~DRZAVA)
+  ggtitle('Brezposelnost')
+  print(graf)
+}
 
+sosednje.drzave.brezposelnost.vseh <- graf.brezposelnost.eu(sosednje.drzave(shrani.brezposelnost.delez.vseh))
+prva.skupina.brezposelnost.vseh <- graf.brezposelnost.eu(prva.skupina(shrani.brezposelnost.delez.vseh))
+druga.skupina.brezposelnost.vseh <- graf.brezposelnost.eu(druga.skupina(shrani.brezposelnost.delez.vseh))
+tretja.skupina.brezposelnost.vseh <- graf.brezposelnost.eu(tretja.skupina(shrani.brezposelnost.delez.vseh))
+cetrta.skupina.brezposelnost.vseh <- graf.brezposelnost.eu(cetrta.skupina(shrani.brezposelnost.delez.vseh))
+peta.skupina.brezposelnost.vseh <- graf.brezposelnost.eu(peta.skupina(shrani.brezposelnost.delez.vseh))
+
+sosednje.drzave.brezposelnost.aktivnih <- graf.brezposelnost.eu(sosednje.drzave(shrani.brezposelnost.delez.aktivnih))
+prva.skupina.brezposelnost.aktivnih <- graf.brezposelnost.eu(prva.skupina(shrani.brezposelnost.delez.aktivnih))
+druga.skupina.brezposelnost.aktivnih <- graf.brezposelnost.eu(druga.skupina(shrani.brezposelnost.delez.aktivnih))
+tretja.skupina.brezposelnost.aktivnih <- graf.brezposelnost.eu(tretja.skupina(shrani.brezposelnost.delez.aktivnih))
+cetrta.skupina.brezposelnost.aktivnih <- graf.brezposelnost.eu(cetrta.skupina(shrani.brezposelnost.delez.aktivnih))
+peta.skupina.brezposelnost.aktivnih <- graf.brezposelnost.eu(peta.skupina(shrani.brezposelnost.delez.aktivnih))
 
 #############################
 # DOLGOTRAJNA BREZPOSELNOST #
 #############################
-#d.brezposelnost.slo <- filter(shrani.brezposelnost, shrani.brezposelnost$DRZAVA == "Slovenija") %>% 
-#  select(LETO, SPOL, DELEZ)
-#d.graf.brezposelnost.slo <- ggplot((data = d.brezposelnost.slo), aes(x= as.numeric(LETO), y= DELEZ, col=SPOL)) + geom_point() + geom_line() +
-#  scale_x_continuous('LETO', breaks = seq(2011, 2019, 1)) +
-#  ggtitle('Dolgotrajna brezposelnost')
+d.brezposelnost.slo <- filter(shrani.brezposelnost, shrani.brezposelnost$DRZAVA == "Slovenija") %>% 
+  select(LETO, SPOL, DELEZ)
+d.graf.brezposelnost.slo <- ggplot((data = d.brezposelnost.slo), aes(x= as.numeric(LETO), y= DELEZ, col=SPOL)) + geom_point() + geom_line() +
+  scale_x_continuous('LETO', breaks = seq(2011, 2019, 1)) +
+  ggtitle('Dolgotrajna brezposelnost')
 
-#z.d.brezposelnost.slo <- filter(shrani.zelo.dolgotrajna.brezposelnost, shrani.zelo.dolgotrajna.brezposelnost$DRZAVA == "Slovenija") %>% 
-#  select(LETO, SPOL, DELEZ)
-#z.d.graf.brezposelnost.slo <- ggplot((data = z.d.brezposelnost.slo), aes(x= as.numeric(LETO), y= DELEZ, col=SPOL)) + geom_point() + geom_line() +
-#  scale_x_continuous('LETO', breaks = seq(2011, 2019, 1)) +
-#  ggtitle('Zelo dolgotrajna brezposelnost')
-
+z.d.brezposelnost.slo <- filter(shrani.zelo.dolgotrajna.brezposelnost, shrani.zelo.dolgotrajna.brezposelnost$DRZAVA == "Slovenija") %>% 
+  select(LETO, SPOL, DELEZ)
+z.d.graf.brezposelnost.slo <- ggplot((data = z.d.brezposelnost.slo), aes(x= as.numeric(LETO), y= DELEZ, col=SPOL)) + geom_point() + geom_line() +
+  scale_x_continuous('LETO', breaks = seq(2011, 2019, 1)) +
+  ggtitle('Zelo dolgotrajna brezposelnost')
 
 
 #############
