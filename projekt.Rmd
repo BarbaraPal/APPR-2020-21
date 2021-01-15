@@ -94,13 +94,39 @@ source("vizualizacija/vizualizacija.r", encoding="UTF-8")
 ```
 Spodnji graf prikazuje delež zaposlenega aktivnega prebivalstva v Sloveniji (med 25 in 54 let).
 
-```{r graf, echo=FALSE, message=FALSE, fig.align='left'}
+```{r graf, echo=FALSE, message=FALSE, fig.align='center'}
 graf_slovenija
 ``` 
 
 ***
 
 # Analiza in vizualizacija podatkov
+
+Spodnji grafi prikazujejo zaposlenost moških in žensk po starostnih skupinah v državah EU.
+```{r graf, echo=FALSE, message=FALSE, fig.align='center'}
+sosednje.drzave.graf
+``` 
+
+```{r graf, echo=FALSE, message=FALSE, fig.align='center'}
+prva.skupina.graf
+``` 
+```{r graf, echo=FALSE, message=FALSE, fig.align='center'}
+druga.skupina.graf
+``` 
+```{r graf, echo=FALSE, message=FALSE, fig.align='center'}
+tretja.skupina.graf
+``` 
+```{r graf, echo=FALSE, message=FALSE, fig.align='center'}
+cetrta.skupina.graf
+``` 
+```{r graf, echo=FALSE, message=FALSE, fig.align='center'}
+peta.skupina.graf
+``` 
+Graf brezposelnosti celotnega prebivalstva Slovenije kaže, da se je delež brezposelnosti od 2013 pa do 2019 manjšal. Če ne bi vedeli, da je sledila kriza, bi iz tega lahko sklepali na še nižjo brezposelnost v prihonosti.
+```{r graf, echo=FALSE, message=FALSE, fig.align='center'}
+graf.brezposelnost.vseh.slo
+``` 
+
 
 
 # Napredna analiza podatkov
