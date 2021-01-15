@@ -35,16 +35,18 @@ peta.skupina <- function(tabela){
 # DELO #
 ########
 
-# Slovenija
+## Slovenija
 
+# delež aktivne populacije
 delo <- shrani.delo %>% filter(DRZAVA %in% "Slovenija", STAROST %in% "25-54", 
                                INDIKATOR %in% "Delež aktivne populacije") %>% 
   select(LETO, SPOL, VREDNOST)
 
 graf_slovenija <- ggplot((data = delo), aes(x= as.numeric(LETO), y= VREDNOST, col=SPOL)) + geom_point() + geom_line() +
   scale_x_continuous('LETO', breaks = seq(2011, 2019, 1)) +
-  ggtitle('Zaposlenost moških in žensk v Sloveniji')
+  ggtitle('Zaposlenost moških in žensk v Sloveniji (v %)')
 
+# delež celotne populacije
 delo1 <- shrani.delo %>% filter(DRZAVA %in% "Slovenija", STAROST %in% "25-54", 
                                INDIKATOR %in% "Delež celotne populacije") %>% 
   select(LETO, SPOL, VREDNOST)
@@ -55,7 +57,7 @@ graf_slovenija1 <- ggplot((data = delo1), aes(x= as.numeric(LETO), y= VREDNOST, 
  
 
 # Države EU
-filtriranje2 <- shrani.delo %>% filter(INDIKATOR == "Delež aktivne populacije")
+filtriranje2 <- shrani.delo %>% filter(INDIKATOR == "Delež celotne populacije")
 
 graf.primerjava.delo <- function(tabela){
   graf <- ggplot(data = tabela,
@@ -64,8 +66,8 @@ graf.primerjava.delo <- function(tabela){
     geom_point() + 
     facet_grid(STAROST~DRZAVA) + 
     scale_x_continuous('LETO', breaks = seq(2011, 2019, 2)) +
-    ggtitle("Zaposlenost moških in žensk")
-  print(graf)
+    ggtitle("Zaposlenost moških in žensk po starostnih skupinah (v %)")
+  return(graf)
 }
 
 sosednje.drzave.graf <- graf.primerjava.delo(sosednje.drzave(filtriranje2))
@@ -88,15 +90,15 @@ graf.zenske <- function(tabela){
   graf <- ggplot((data = tabela), aes(x= as.numeric(LETO), y= VREDNOST, col=DRZAVA)) + geom_point() + geom_line() +
     scale_x_continuous('LETO', breaks = seq(2011, 2019, 1)) +
     ggtitle("Zaposlenost žensk - primerjava")
-  return(print(graf))
+  return(graf)
 }
 
-sosednje.drzave.zenske.graf <- graf.zenske(filtriranje1(sosednje.drzave(filtriranje2)))
-prva.skupina.zenske.graf <- graf.zenske(filtriranje1(prva.skupina(filtriranje2)))
-druga.skupina.zenske.graf <- graf.zenske(filtriranje1(druga.skupina(filtriranje2)))
-tretja.skupina.zenske.graf <- graf.zenske(filtriranje1(tretja.skupina(filtriranje2)))
-cetrta.skupina.zenske.graf <- graf.zenske(filtriranje1(cetrta.skupina(filtriranje2)))
-peta.skupina.zenske.graf <- graf.zenske(filtriranje1(peta.skupina(filtriranje2)))
+#sosednje.drzave.zenske.graf <- graf.zenske(filtriranje1(sosednje.drzave(filtriranje2)))
+#prva.skupina.zenske.graf <- graf.zenske(filtriranje1(prva.skupina(filtriranje2)))
+#druga.skupina.zenske.graf <- graf.zenske(filtriranje1(druga.skupina(filtriranje2)))
+#tretja.skupina.zenske.graf <- graf.zenske(filtriranje1(tretja.skupina(filtriranje2)))
+#cetrta.skupina.zenske.graf <- graf.zenske(filtriranje1(cetrta.skupina(filtriranje2)))
+#peta.skupina.zenske.graf <- graf.zenske(filtriranje1(peta.skupina(filtriranje2)))
 
 
 ##################################
@@ -120,7 +122,7 @@ filter2 <- shrani.izobrazba %>% filter(STAROST == "25-54",
 graf.izobrazba.eu <- function(tabela){
   graf <- ggplot((data = tabela), aes(x= as.numeric(LETO), y= VREDNOST, col=SPOL)) + geom_point() + geom_line() +
     scale_x_continuous('LETO', breaks = seq(2011, 2019, 2)) +
-    ggtitle('Zaposlenost moških in žensk glede na izobrazbo') +
+    ggtitle('Zaposlenost moških in žensk (od 25 do 54 let) glede na izobrazbo') +
     facet_grid(INDIKATOR~DRZAVA)
   return(graf)
 }
@@ -150,7 +152,7 @@ graf.polovica.eu <- function(tabela){
   scale_x_continuous('LETO', breaks = seq(2011, 2019, 2)) +
   facet_grid(~DRZAVA)
   ggtitle('Polovični delovni čas')
-  print(graf)
+  return(graf)
 }
 
 sosednje.polovica <- graf.polovica.eu(sosednje.drzave(shrani.polovica))
@@ -181,7 +183,7 @@ brezposelnost.vseh.slo <- filter(shrani.brezposelnost.delez.vseh, shrani.brezpos
   select(LETO, SPOL, DELEZ)
 graf.brezposelnost.vseh.slo <- ggplot((data = brezposelnost.vseh.slo), aes(x= as.numeric(LETO), y= DELEZ, col=SPOL)) + geom_point() + geom_line() +
   scale_x_continuous('LETO', breaks = seq(2011, 2019, 1)) +
-  ggtitle('Brezposelnost vseh')
+  ggtitle('Brezposelnost celotnega prebivalstva (v %)')
 
 brezposelnost.aktivni.slo <- filter(shrani.brezposelnost.delez.aktivnih, shrani.brezposelnost.delez.aktivnih$DRZAVA == "Slovenija") %>% 
   select(LETO, SPOL, DELEZ)
@@ -195,7 +197,7 @@ graf.brezposelnost.eu <- function(tabela){
     scale_x_continuous('LETO', breaks = seq(2011, 2019, 2)) +
     facet_grid(~DRZAVA)
   ggtitle('Brezposelnost')
-  print(graf)
+  return(graf)
 }
 
 sosednje.drzave.brezposelnost.vseh <- graf.brezposelnost.eu(sosednje.drzave(shrani.brezposelnost.delez.vseh))
@@ -231,21 +233,53 @@ z.d.graf.brezposelnost.slo <- ggplot((data = z.d.brezposelnost.slo), aes(x= as.n
 #############
 # ZEMLJEVID #
 #############
+eu <- c("Belgium",
+        "Bulgaria",
+        "Czechia",
+        "Denmark",
+        "Germany",
+        "Estonia",
+        "Ireland",
+        "Greece",
+        "Spain",
+        "France",
+        "Croatia",
+        "Italy",
+        "Cyprus",
+        "Latvia",
+        "Lithuania",
+        "Luxembourg",
+        "Hungary",
+        "Netherlands",
+        "Austria",
+        "Poland",
+        "Portugal",
+        "Romania",
+        "Slovenia",
+        "Slovakia",
+        "Finland",
+        "Sweden",
+        "United Kingdom"
+)
+#data("World")
+#tmap_mode("view")
+#brezposelnost.eu19 <- shrani.brezposelnost.delez.aktivnih %>% filter(SPOL == "ženske", LETO == "2019", DRZAVA != "Malta") %>% 
+#  select(DRZAVA, DELEZ) %>%
+#  data.frame("id" = c(1:27))
+#brezposelnost.eu191 <- data.frame(eu, "id" = c(1:27)) 
+#brezposelnost123 <- inner_join(brezposelnost.eu19, brezposelnost.eu191, by= "id") %>% select(eu, DELEZ) %>% View
+#evropa <- World %>% filter(continent %in% c("Europe", "Asia"), 
+#                           name %in% c("Belgium", "Bulgaria", "Denmark", "Czech Rep.",
+#                            "Germany", "Estonia" , "Ireland", "Greece", "Spain", "France", 
+#                            "Croatia", "Italy", "Finland", "Sweden", "United Kingdom",
+#                            "Latvia", "Lithuania","Luxembourg", "Hungary", "Netherlands",
+#                            "Austria", "Poland",  "Portugal", "Romania", "Slovenia", "Slovakia",
+#                            "N. Cyprus"
+#                              ))
+#tm_shape(evropa) + tm_polygons() + tm_style("cobalt")
+#zemljevid.brezposelnost <-  tm_shape(merge(evropa, brezposelnost123, by.x="name", by.y="eu")) +
+#  tm_polygons() +
+#  tm_style("cobalt") 
 
-data("World")
-tmap_mode("view")
 
-evropa <- filter(World, World$continent == "Europe")
-tm_shape(evropa) + tm_polygons()
-
-
-# Uvozimo zemljevid.
-#zemljevid <- uvozi.zemljevid("http://baza.fmf.uni-lj.si/OB.zip", "OB",
-#                             pot.zemljevida="OB", encoding="Windows-1250")
-# Če zemljevid nima nastavljene projekcije, jo ročno določimo
-#proj4string(zemljevid) <- CRS("+proj=utm +zone=10+datum=WGS84")
-
-#levels(zemljevid$OB_UIME) <- levels(zemljevid$OB_UIME) %>%
-#  { gsub("Slovenskih", "Slov.", .) } %>% { gsub("-", " - ", .) }
-#zemljevid$OB_UIME <- factor(zemljevid$OB_UIME, levels=levels(obcine$obcina))
 

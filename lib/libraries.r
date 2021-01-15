@@ -7,6 +7,8 @@ library(shiny)
 library(dplyr)
 library(readr)
 library(stringr)
+library(rgdal)
+
 
 
 
